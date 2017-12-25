@@ -2,3 +2,6 @@
 <p>카테고리 설명: {{ category.tagline }}</p>
 <p>공개여부: {{ category.is_open }}</p>
 <p>순서: {{ category.ordering }}</p>
+<hr />
+
+<p><a href="{% url 'category_edit' pk=category.pk %}">카테고리 수정</a></p>
