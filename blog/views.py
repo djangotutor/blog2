@@ -2,6 +2,8 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 from .models import Category
 
 class CategoryList(ListView):
@@ -19,3 +21,8 @@ class CategoryCreate(CreateView):
 class CategoryUpdate(UpdateView):
 	model = Category
 	fields = ['name', 'tagline', 'is_open', 'ordering']
+
+class CategoryDelete(DeleteView):
+	model = Category
+	context_object_name = 'category'
+	success_url = reverse_lazy('category_list')
