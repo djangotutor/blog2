@@ -38,5 +38,8 @@ class PostList(ListView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		if self.request.user.is_anonymous:
+			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		else:
+			context['categorys'] = Category.objects.all().order_by('ordering')
 		return context
