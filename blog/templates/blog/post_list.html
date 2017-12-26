@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>Learn Django Blog</title>
+	</head>
+	<body>
+		<div>
+			<h1><a href="/">Learn Django Blog</a></h1>
+		</div>
+
+		<div>
+			<ul>
+				{% for category in categorys %}
+					<li><a href="">{{ category.name }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		{% for post in posts %}
+			<div>
+				<p>published: {{ post.published_date }}</p>
+				<h1><a href="">{{ post.title }}</a></h1>
+				<p>{{ post.text|linebreaksbr }}</p>
+			</div>
+		{% endfor %}
+	</body>
+</html>
