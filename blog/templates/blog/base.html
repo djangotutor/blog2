@@ -47,6 +47,7 @@
 					{% if user.is_authenticated %}
 						<div class="sidebar-module sidebar-module-inset">
 							<a class="btn btn-outline-primary" href="{% url 'post_new' %}">새글쓰기</a>
+							<a class="btn btn-outline-primary" href="{% url 'post_draft_list' %}">미발행글</a>
 						</div>
 						<hr />
 					{% endif %}

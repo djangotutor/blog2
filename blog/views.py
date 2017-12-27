@@ -101,3 +101,19 @@ class PostUpdate(UpdateView):
 		else:
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
+
+class PostDraftList(ListView):
+	model = Post
+	context_object_name = 'posts'
+	template_name = 'blog/post_draft_list.html'
+
+	def get_queryset(self):
+		return Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if self.request.user.is_authenticated:
+			context['categorys'] = Category.objects.all().order_by('ordering')
+		else:
+			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		return context

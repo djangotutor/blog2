@@ -12,4 +12,5 @@ urlpatterns = [
 	url(r'^posts/(?P<pk>\d+)/$', views.PostDetail.as_view(), name='post_detail'),
 	url(r'^posts/new/$', views.PostAdd.as_view(), name='post_new'),
 	url(r'^posts/(?P<pk>\d+)/edit/$', views.PostUpdate.as_view(), name='post_edit'),
+	url(r'^drafts/$', views.PostDraftList.as_view(), name='post_draft_list'),
 ]
