@@ -3,6 +3,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
 from .models import Category
@@ -42,4 +43,13 @@ class PostList(ListView):
 			context['categorys'] = Category.objects.all().order_by('ordering')
 		else:
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		return context
+
+class PostListByCategory(PostList):
+	def get_queryset(self):
+		return Post.objects.filter(category__pk=self.kwargs['pk']).filter(published_date__lte=timezone.now()).order_by('-published_date')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		context['category'] = get_object_or_404(Category, pk=self.kwargs['pk'])
 		return context

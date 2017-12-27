@@ -8,4 +8,5 @@ urlpatterns = [
 	url(r'^category/(?P<pk>\d+)/edit/$', views.CategoryUpdate.as_view(), name='category_edit'),
 	url(r'^category/(?P<pk>\d+)/delete/$', views.CategoryDelete.as_view(), name='category_delete'),
 	url(r'^$', views.PostList.as_view(), name='post_list'),
+	url(r'^categorys/(?P<pk>\d+)/$', views.PostListByCategory.as_view(), name='posts'),
 ]
