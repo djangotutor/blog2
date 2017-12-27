@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	<div class="blog-post">
+		<form action="" method="post">{% csrf_token %}
+			<p>"{{ post }}" 포스트를 삭제하시겠습니까?</p>
+			<input type="submit" vlaue="Confirm" />
+		</form>
+	</div>
+{% endblock %}

@@ -128,3 +128,16 @@ class PostPublish(RedirectView):
 		post = get_object_or_404(Post, pk=kwargs['pk'])
 		post.publish()
 		return super().get_redirect_url(*args, **kwargs)
+
+class PostDelete(DeleteView):
+	model = Post
+	context_object_name = 'post'
+	success_url = reverse_lazy('post_list')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if self.request.user.is_authenticated:
+			context['categorys'] = Category.objects.all().order_by('ordering')
+		else:
+			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		return context
