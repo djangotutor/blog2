@@ -50,6 +50,11 @@
 							<a class="btn btn-outline-primary" href="{% url 'post_draft_list' %}">미발행글</a>
 						</div>
 						<hr />
+					{% else %}
+						<div class="sidebar-module sidebar-module-inset">
+							<a class="btn btn-outline-primary" href="{% url 'login' %}">로그인</a>
+						</div>
+						<hr />
 					{% endif %}
 					<div class="sidebar-module sidebar-module-inset">
 						<h4>About</h4>
