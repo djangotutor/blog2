@@ -11,4 +11,5 @@ urlpatterns = [
 	url(r'^categorys/(?P<pk>\d+)/$', views.PostListByCategory.as_view(), name='posts'),
 	url(r'^posts/(?P<pk>\d+)/$', views.PostDetail.as_view(), name='post_detail'),
 	url(r'^posts/new/$', views.PostAdd.as_view(), name='post_new'),
+	url(r'^posts/(?P<pk>\d+)/edit/$', views.PostUpdate.as_view(), name='post_edit'),
 ]

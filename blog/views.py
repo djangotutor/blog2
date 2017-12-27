@@ -85,3 +85,21 @@ class PostAdd(CreateView):
 		else:
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
+
+class PostUpdate(UpdateView):
+	model = Post
+	fields = ['category', 'title', 'text']
+
+	def form_valid(self, form):
+		post = form.save(commit=False)
+		post.author = self.request.user
+		post.published_date = timezone.now()
+		return super().form_valid(form)
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if self.request.user.is_authenticated:
+			context['categorys'] = Category.objects.all().order_by('ordering')
+		else:
+			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		return context
