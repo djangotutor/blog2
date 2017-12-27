@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
@@ -10,22 +12,27 @@ from django.utils import timezone
 from .models import Category
 from .models import Post
 
+@method_decorator(login_required, name='dispatch')
 class CategoryList(ListView):
 	model = Category
 	context_object_name = 'categorys'
 
+@method_decorator(login_required, name='dispatch')
 class CategoryDetail(DetailView):
 	model = Category
 	context_object_name = 'category'
 
+@method_decorator(login_required, name='dispatch')
 class CategoryCreate(CreateView):
 	model = Category
 	fields = ['name', 'tagline', 'is_open', 'ordering']
 
+@method_decorator(login_required, name='dispatch')
 class CategoryUpdate(UpdateView):
 	model = Category
 	fields = ['name', 'tagline', 'is_open', 'ordering']
 
+@method_decorator(login_required, name='dispatch')
 class CategoryDelete(DeleteView):
 	model = Category
 	context_object_name = 'category'
@@ -69,6 +76,7 @@ class PostDetail(DetailView):
 		context['category'] = p.category
 		return context
 
+@method_decorator(login_required, name='dispatch')
 class PostAdd(CreateView):
 	model = Post
 	fields = ['category', 'title', 'text']
@@ -86,6 +94,7 @@ class PostAdd(CreateView):
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
 
+@method_decorator(login_required, name='dispatch')
 class PostUpdate(UpdateView):
 	model = Post
 	fields = ['category', 'title', 'text']
@@ -103,6 +112,7 @@ class PostUpdate(UpdateView):
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
 
+@method_decorator(login_required, name='dispatch')
 class PostDraftList(ListView):
 	model = Post
 	context_object_name = 'posts'
@@ -119,6 +129,7 @@ class PostDraftList(ListView):
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
 
+@method_decorator(login_required, name='dispatch')
 class PostPublish(RedirectView):
 	permanent = False
 	query_string = True
@@ -129,6 +140,7 @@ class PostPublish(RedirectView):
 		post.publish()
 		return super().get_redirect_url(*args, **kwargs)
 
+@method_decorator(login_required, name='dispatch')
 class PostDelete(DeleteView):
 	model = Post
 	context_object_name = 'post'
