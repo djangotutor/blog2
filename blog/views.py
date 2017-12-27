@@ -1,3 +1,4 @@
+from django.contrib.auth.views import LoginView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic.list import ListView
@@ -145,6 +146,16 @@ class PostDelete(DeleteView):
 	model = Post
 	context_object_name = 'post'
 	success_url = reverse_lazy('post_list')
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if self.request.user.is_authenticated:
+			context['categorys'] = Category.objects.all().order_by('ordering')
+		else:
+			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		return context
+
+class UserLoginView(LoginView):
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
