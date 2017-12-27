@@ -3,6 +3,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
+from django.views.generic.base import RedirectView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -117,3 +118,13 @@ class PostDraftList(ListView):
 		else:
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
+
+class PostPublish(RedirectView):
+	permanent = False
+	query_string = True
+	pattern_name = 'post_detail'
+
+	def get_redirect_url(self, *args, **kwargs):
+		post = get_object_or_404(Post, pk=kwargs['pk'])
+		post.publish()
+		return super().get_redirect_url(*args, **kwargs)
