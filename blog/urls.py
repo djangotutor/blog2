@@ -16,4 +16,5 @@ urlpatterns = [
 	url(r'^posts/(?P<pk>\d+)/publish/$', views.PostPublish.as_view(), name='post_publish'),
 	url(r'^posts/(?P<pk>\d+)/remove/$', views.PostDelete.as_view(), name='post_remove'),
 	url(r'^accounts/login/$', views.UserLoginView.as_view(), name='login'),
+	url(r'^posts/(?P<pk>\d+)/comment/$', views.CommentAdd.as_view(), name='add_comment_to_post'),
 ]

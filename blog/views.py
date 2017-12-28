@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from .models import Category
 from .models import Post
+from .models import Comment
 
 @method_decorator(login_required, name='dispatch')
 class CategoryList(ListView):
@@ -156,6 +157,23 @@ class PostDelete(DeleteView):
 		return context
 
 class UserLoginView(LoginView):
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		if self.request.user.is_authenticated:
+			context['categorys'] = Category.objects.all().order_by('ordering')
+		else:
+			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
+		return context
+
+class CommentAdd(CreateView):
+	model = Comment
+	fields = ['author', 'text']
+
+	def form_valid(self, form):
+		comment = form.save(commit=False)
+		comment.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+		return super().form_valid(form)
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
