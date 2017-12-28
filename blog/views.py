@@ -183,6 +183,7 @@ class CommentAdd(CreateView):
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
 
+@method_decorator(login_required, name='dispatch')
 class CommentApprove(RedirectView):
 	permanent = False
 	query_string = True
@@ -194,6 +195,7 @@ class CommentApprove(RedirectView):
 		kwargs['pk'] = comment.post.pk
 		return super().get_redirect_url(*args, **kwargs)
 
+@method_decorator(login_required, name='dispatch')
 class CommentDelete(RedirectView):
 	permanent = False
 	query_string = True
