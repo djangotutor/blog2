@@ -182,3 +182,14 @@ class CommentAdd(CreateView):
 		else:
 			context['categorys'] = Category.objects.filter(is_open=True).order_by('ordering')
 		return context
+
+class CommentApprove(RedirectView):
+	permanent = False
+	query_string = True
+	pattern_name = 'post_detail'
+
+	def get_redirect_url(self, *args, **kwargs):
+		comment = get_object_or_404(Comment, pk=kwargs['pk'])
+		comment.approve()
+		kwargs['pk'] = comment.post.pk
+		return super().get_redirect_url(*args, **kwargs)
