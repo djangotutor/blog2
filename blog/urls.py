@@ -18,4 +18,5 @@ urlpatterns = [
 	url(r'^accounts/login/$', views.UserLoginView.as_view(), name='login'),
 	url(r'^posts/(?P<pk>\d+)/comment/$', views.CommentAdd.as_view(), name='add_comment_to_post'),
 	url(r'^comments/(?P<pk>\d+)/approve/$', views.CommentApprove.as_view(), name='comment_approve'),
+	url(r'^comments/(?P<pk>\d+)/remove/$', views.CommentDelete.as_view(), name='comment_remove'),
 ]

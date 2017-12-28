@@ -193,3 +193,14 @@ class CommentApprove(RedirectView):
 		comment.approve()
 		kwargs['pk'] = comment.post.pk
 		return super().get_redirect_url(*args, **kwargs)
+
+class CommentDelete(RedirectView):
+	permanent = False
+	query_string = True
+	pattern_name = 'post_detail'
+
+	def get_redirect_url(self, *args, **kwargs):
+		comment = get_object_or_404(Comment, pk=kwargs['pk'])
+		comment.delete()
+		kwargs['pk'] = comment.post.pk
+		return super().get_redirect_url(*args, **kwargs)

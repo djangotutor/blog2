@@ -29,6 +29,7 @@
 					{% if not comment.approved_comment %}
 						<a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">approve</a>
 					{% endif %}
+					<a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">delete</a>
 				</div>
 				<strong>{{ comment.author }}</strong>
 				<p>{{ comment.text|linebreaks }}</p>
